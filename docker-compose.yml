@@ -1,0 +1,9 @@
+version: '3'
+services: 
+  nginx:
+    build: ./Docker/nginx
+    volumes:
+      - ./src:/var/www/src
+      - ./Docker/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
