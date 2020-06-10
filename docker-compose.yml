@@ -7,3 +7,10 @@ services:
       - ./Docker/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
     ports:
       - "80:80"
+    depends_on: 
+      - php-fpm
+      
+  php-fpm:
+    build: ./Docker/php-fpm
+    volumes:
+      - ./src:/var/www/src
