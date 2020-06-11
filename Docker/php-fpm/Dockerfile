@@ -6,6 +6,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN set -eux \
   && apk update \
+  && apk add --no-cache nodejs npm \
   && docker-php-ext-install -j$(nproc) pdo_mysql opcache
 
 RUN mkdir /var/www/src

@@ -14098,7 +14098,7 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /usr/src/app/resources/js/quiz.js */"./resources/js/quiz.js");
+module.exports = __webpack_require__(/*! /var/www/src/resources/js/quiz.js */"./resources/js/quiz.js");
 
 
 /***/ })
