@@ -34,4 +34,9 @@ services:
     working_dir: /usr/src/app
     volumes:
       - ./laravel:/usr/src/app
+      - ./frontend:/usr/src/frontend
+    ports:
+      - "8080:8080" # http-server
+      - "3000:3000" # BrowserSync
+      - "3001:3001" # BrowserSync
     tty: true
