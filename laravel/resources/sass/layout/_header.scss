@@ -20,6 +20,9 @@ header {
       width: 200px;
       margin-top: -15px;
     }
+    &-nav__drop-down {
+      background: $thin-gray;
+    }
   }
 
   #header {
@@ -34,6 +37,21 @@ header {
 
       &__register {
         color: $white;
+      }
+
+      &__name {
+        color: $white;
+      }
+
+      &__mypage {
+        color: $white;
+        margin: auto;
+      }
+
+      &__logout {
+        color: $white;
+        margin: auto;
+        cursor: pointer;
       }
     }
   }
