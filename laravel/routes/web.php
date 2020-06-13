@@ -33,3 +33,5 @@ Route::post('/login', 'Auth\LoginController@login');
 
 // ログアウト
 Route::post('/logout', 'Auth\LoginController@logout');
+
+Route::post('/insertRanking', 'Web\RankingController@insertRanking');
