@@ -11,10 +11,12 @@
 |
 */
 
+// トップページ
 Route::get('/', function () {
     return view('index');
 });
 
+// クイズページ
 Route::get('/quiz', function () {
     return view('quiz.index');
 });
@@ -35,3 +37,8 @@ Route::post('/login', 'Auth\LoginController@login');
 Route::post('/logout', 'Auth\LoginController@logout');
 
 Route::post('/insertRanking', 'Web\RankingController@insertRanking');
+
+// マイページ
+Route::get('/mypage', function () {
+    return view('mypage.index');
+});
