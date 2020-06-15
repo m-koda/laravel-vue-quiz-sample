@@ -34,17 +34,37 @@
             </h2>
             <div>
               <label>
-                <input class="ranking-radio" type="radio" name="ranking-radio" value="1" checked />総合
+                <input
+                  v-model="rankingType"
+                  class="ranking-radio"
+                  type="radio"
+                  name="ranking-radio"
+                  value="1"
+                />総合
               </label>
               <label>
-                <input class="ranking-radio" type="radio" name="ranking-radio" value="2" />今月
+                <input
+                  v-model="rankingType"
+                  class="ranking-radio"
+                  type="radio"
+                  name="ranking-radio"
+                  value="2"
+                />今月
               </label>
               <label>
-                <input class="ranking-radio" type="radio" name="ranking-radio" value="3" />今週
+                <input
+                  v-model="rankingType"
+                  class="ranking-radio"
+                  type="radio"
+                  name="ranking-radio"
+                  value="3"
+                />今週
               </label>
             </div>
             <div class="home_quiz__ranking-chart">
-              <bar-chart></bar-chart>
+              <bar-chart :chartData="total" ref="totalChart" v-show="rankingType === '1'"></bar-chart>
+              <bar-chart :chartData="month" ref="monthChart" v-show="rankingType === '2'"></bar-chart>
+              <bar-chart :chartData="week" ref="weekChart" v-show="rankingType === '3'"></bar-chart>
             </div>
           </section>
           <section class="home__notice">
@@ -77,7 +97,12 @@ export default {
     return {
       categories: [1],
       informations: [],
-      category: []
+      category: [],
+      rankingAlldata: {},
+      week: {},
+      month: {},
+      total: {},
+      rankingType: "1"
     };
   },
   mounted() {
@@ -89,10 +114,52 @@ export default {
     this.$http.get("/api/category").then(response => {
       this.category = response.data;
     });
+    // ランキングの取得
+    this.$http.get("/api/ranking").then(response => {
+      this.rankingAlldata = response.data;
+      this.setRanking();
+    });
   },
   methods: {
-    goQuiz: function() {
+    goQuiz() {
       this.$router.push("/quiz?categories=" + this.categories);
+    },
+    setRanking() {
+      this.week = Object.assign({}, this.week, {
+        labels: this.rankingAlldata.weekRankingData.name,
+        datasets: [
+          {
+            label: ["最高得点率"],
+            backgroundColor: "rgba(0, 170, 248, 0,47)",
+            data: this.rankingAlldata.weekRankingData.percentage_correct_answer
+          }
+        ]
+      });
+      this.month = Object.assign({}, this.month, {
+        labels: this.rankingAlldata.monthRankingData.name,
+        datasets: [
+          {
+            label: ["最高得点率"],
+            backgroundColor: "rgba(0, 170, 248, 0,47)",
+            data: this.rankingAlldata.monthRankingData.percentage_correct_answer
+          }
+        ]
+      });
+      this.total = Object.assign({}, this.total, {
+        labels: this.rankingAlldata.totalRankingData.name,
+        datasets: [
+          {
+            label: ["最高得点率"],
+            backgroundColor: "rgba(0, 170, 248, 0,47)",
+            data: this.rankingAlldata.totalRankingData.percentage_correct_answer
+          }
+        ]
+      });
+      this.$nextTick(() => {
+        this.$refs.totalChart.renderBarChart();
+        this.$refs.monthChart.renderBarChart();
+        this.$refs.weekChart.renderBarChart();
+      });
     }
   }
 };

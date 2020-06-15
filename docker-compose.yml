@@ -26,7 +26,11 @@ services:
       - "3306:3306"
     volumes:
       - ./db-data:/var/lib/mysql
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ## 5.7のデフォルトのsql_modeは以下の通り
+    ## ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+    ## ONLY_FULL_GROUP_BYだけ省く
+    ## https://qiita.com/masayuki14/items/3aa199035eb4fdcfa446
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --sql-mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
     environment: 
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: laravel
