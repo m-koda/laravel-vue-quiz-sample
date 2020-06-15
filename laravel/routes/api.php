@@ -23,3 +23,5 @@ Route::group(['middleware' => ['api']], function () {
     Route::get('quiz', 'Api\QuizController@index');
     Route::get('ranking', 'Api\RankingController@index');
 });
+
+Route::get('mypage', 'Api\MyPageController@index')->middleware(['auth:api']);

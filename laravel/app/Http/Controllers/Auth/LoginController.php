@@ -48,8 +48,6 @@ class LoginController extends Controller
             'api_token' => hash('sha256', $token)
         ])->save();
 
-        $request->user()->update(['api_token' => str_random(60)]);
-
         session()->put('api_token', $token);
     }
 }
