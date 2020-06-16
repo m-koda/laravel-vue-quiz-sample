@@ -5,6 +5,7 @@ import Quiz from './components/page/Quiz';
 import Register from './components/page/Register';
 import Login from './components/page/Login';
 import MyPage from './components/page/MyPage';
+import Keyword from './components/page/Keyword';
 
 Vue.use(Router);
 
@@ -35,6 +36,11 @@ export default new Router({
       path: '/mypage',
       name: 'mypage',
       component: MyPage,
+    },
+    {
+      path: '/keyword',
+      name: 'keyword',
+      component: Keyword,
     }
   ],
 });
