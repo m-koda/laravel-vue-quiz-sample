@@ -42,3 +42,8 @@ Route::post('/insertRanking', 'Web\RankingController@insertRanking');
 Route::get('/mypage', function () {
     return view('mypage.index');
 });
+
+// キーワード
+Route::get('/keyword', function () {
+    return view('keyword.index');
+});
