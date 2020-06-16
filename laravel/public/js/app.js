@@ -2861,13 +2861,22 @@ __webpack_require__.r(__webpack_exports__);
     this.$http.get("/api/quiz?categories=".concat(categories)).then(function (response) {
       _this.quizData = response.data;
 
-      _this.findNextQuiz(0);
+      if (_this.quizData.length < 5) {
+        alert("クイズが5問以下のため初期画面に戻ります。カテゴリーを選択し直してください");
+        location.href = "/";
+      } else {
+        _this.findNextQuiz(0);
 
-      loader.hide();
+        loader.hide();
+      }
+    })["catch"](function (error) {
+      alert("クイズの読み込みに失敗したため、初期画面に戻ります");
+      location.href = "/";
     });
   },
   methods: {
     findNextQuiz: function findNextQuiz(quizNumber) {
+      window.scroll(0, 0);
       this.title = this.quizData[quizNumber].title;
       this.answers = [this.quizData[quizNumber].answer.answer_1, this.quizData[quizNumber].answer.answer_2, this.quizData[quizNumber].answer.answer_3, this.quizData[quizNumber].answer.answer_4];
       this.commentary = this.quizData[quizNumber].answer.commentary;
