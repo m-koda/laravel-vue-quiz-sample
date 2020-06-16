@@ -21,8 +21,20 @@
               </label>
               <div class>
                 全項目チェック
-                <button type="button" name="check_all" id="check-all" value="1">ON</button>
-                <button type="button" name="check_all_off" id="check-all-off" value="1">OFF</button>
+                <button
+                  v-on:click="allCheck"
+                  type="button"
+                  name="check_all"
+                  id="check-all"
+                  value="1"
+                >ON</button>
+                <button
+                  v-on:click="allCheckOff"
+                  type="button"
+                  name="check_all_off"
+                  id="check-all-off"
+                  value="1"
+                >OFF</button>
               </div>
               <button type="submit" class="btn btn-primary" @click.stop.prevent="goQuiz()">出題開始</button>
               <input type="hidden" name="_token" value />
@@ -132,6 +144,16 @@ export default {
     }
   },
   methods: {
+    allCheck() {
+      let val = [];
+      this.category.forEach(element => {
+        val.push(element.id);
+      });
+      this.categories = val;
+    },
+    allCheckOff() {
+      this.categories = [];
+    },
     goQuiz() {
       this.$router.push("/quiz?categories=" + this.categories);
     },
