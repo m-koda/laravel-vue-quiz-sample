@@ -9,7 +9,7 @@ import Keyword from './components/page/Keyword';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -36,6 +36,9 @@ export default new Router({
       path: '/mypage',
       name: 'mypage',
       component: MyPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/keyword',
@@ -44,3 +47,31 @@ export default new Router({
     }
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(rec => rec.meta.requiresAuth)) {
+    router.app.$http.get("/api/user").then(response => {
+      const user = response.data;
+      if (user) {
+        next();
+      } else {
+        next({
+          path: '/login'
+        });
+      }
+    }).catch(error => {
+      if (error.response.status === 401) {
+        alert("ログインしてください");
+      } else {
+        alert("予期しないエラーが発生しました。再度ログインを行ってください");
+      }
+      next({
+        path: '/login'
+      });
+    });
+  } else {
+    next();
+  }
+});
+
+export default router;

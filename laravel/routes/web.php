@@ -30,7 +30,7 @@ Route::post('/register', 'Auth\RegisterController@register');
 // ログイン
 Route::get('/login', function () {
     return view('auth.login.index');
-});
+})->name('login');
 Route::post('/login', 'Auth\LoginController@login');
 
 // ログアウト
@@ -41,7 +41,7 @@ Route::post('/insertRanking', 'Web\RankingController@insertRanking');
 // マイページ
 Route::get('/mypage', function () {
     return view('mypage.index');
-});
+})->middleware('auth');
 
 // キーワード
 Route::get('/keyword', function () {
